@@ -32,6 +32,7 @@ var futurebadadj = function(){
 		"memetic",
 		"sapient",
 		"crypto",
+		"electromagnetic",
 	])
 }
 
@@ -41,6 +42,7 @@ var futurebadnoun = function(){
 		"nanobots",
 		"selfies",
 		"cyberteens",
+		"automaton bait",
 	])
 }
 
@@ -57,6 +59,7 @@ var futureverbs = function(noun){
 		"use the",
 		"activate the",
 		"re-synergize the",
+		"phase shift the",
 		"regenerate the",
 		"traverse the",
 		"research modifications to the",
@@ -128,6 +131,7 @@ var futurephrase = function(){
 		"have you tried to",
 		"easy. just",
 		"manual says to",
+		"navigation console recommends to",
 		"cybergoogle for how to",
 		"make sure not to",
 	].map(function(e){
