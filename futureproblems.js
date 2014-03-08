@@ -124,6 +124,7 @@ var futurephrase = function(){
 		"",
 		"maybe you should",
 		"you're gonna have to",
+		"have you tried to",
 		"easy. just",
 		"manual says to",
 		"cybergoogle for how to",
