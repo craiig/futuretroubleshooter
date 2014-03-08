@@ -119,6 +119,7 @@ var futurephrase = function(){
 console.log(futurephrase());
 
 //another way to test: generate until this word appears
+return
 test_str = "lagrangian"
 do {
 	testphrase = futurephrase()	
