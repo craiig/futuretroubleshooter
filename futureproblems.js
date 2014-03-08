@@ -54,18 +54,19 @@ var futureverbs = function(noun){
 		"use the",
 		"activate the",
 		"synergize the",
-		"regenerate a"
+		"regenerate the",
+		"research modifications to the",
 	].map(function(e){ return e +" "+ noun });
 	a.push("recalculate the "+noun+" matrix");
 	a.push("verify the "+noun+" settings");
 	a.push("double check the "+noun+" for "+ c(s(futurebadadj()), s(futurebadnoun())) );
+	a.push("sounds like you've got "+ c(s(futurebadadj()), s(futurebadnoun())));
 	return a;
 	//.push("re-calculate the "+noun+" matrix")
 }
 
 var futureadj = function(){
 	return [
-		"",
 		"plasma",
 		"warp",
 		"wave",
@@ -82,6 +83,8 @@ var futureadj = function(){
 		"memetic",
 		"hyperspace",
 		"FTL",
+		"tachyon",
+		"spacetime",
 	]
 }
 
@@ -91,16 +94,17 @@ var futurenouns = function(){
 		"reactor",
 		"engine",
 		"coil converter",
-		"control",
+		"controller",
 		"network",
 		"interface",
 		"divider",
 		"dispenser",
-		"guide",
+		"guidance vector",
 		"wizard",
 		"blaster",
 		"robot",
-		"stardrive"
+		"stardrive",
+		"warphole"
 	].map(function(e){ return c(s(futureadj()), e)}) //combine all nouns here with a randomly selected future adjective
 	return a
 }
@@ -109,4 +113,13 @@ var futurephrase = function(){
 	return s(futureverbs( s(futurenouns()) )) ;
 }
 
+//basic test
 console.log(futurephrase());
+
+//another way to test: generate until this word appears
+test_str = "research"
+do {
+	testphrase = futurephrase()	
+}
+while( testphrase.indexOf(test_str) == -1 )
+console.log(testphrase)
