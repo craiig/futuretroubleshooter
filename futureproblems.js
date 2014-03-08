@@ -27,7 +27,8 @@ var futurebadadj = function(){
 		"",
 		"angry",
 		"viral",
-		"memetic"
+		"memetic",
+		"sapient"
 	]
 }
 
@@ -35,7 +36,8 @@ var futurebadnoun = function(){
 	return [
 		"techroaches",
 		"nanobots",
-		"selfies"
+		"selfies",
+		"cyberteens",
 	]
 }
 
@@ -52,6 +54,7 @@ var futureverbs = function(noun){
 		"use the",
 		"activate the",
 		"synergize the",
+		"regenerate a"
 	].map(function(e){ return e +" "+ noun });
 	a.push("recalculate the "+noun+" matrix");
 	a.push("verify the "+noun+" settings");
@@ -62,6 +65,7 @@ var futureverbs = function(noun){
 
 var futureadj = function(){
 	return [
+		"",
 		"plasma",
 		"warp",
 		"wave",
@@ -75,7 +79,9 @@ var futureadj = function(){
 		"wizard",
 		"dyson",
 		"emotion",
-		"memetic"
+		"memetic",
+		"hyperspace",
+		"FTL",
 	]
 }
 
@@ -83,6 +89,7 @@ var futurenouns = function(){
 	a = [
 		"coil",
 		"reactor",
+		"engine",
 		"coil converter",
 		"control",
 		"network",
@@ -92,7 +99,9 @@ var futurenouns = function(){
 		"guide",
 		"wizard",
 		"blaster",
-	].map(function(e){ return s(futureadj()) + " " + e})
+		"robot",
+		"stardrive"
+	].map(function(e){ return c(s(futureadj()), e)}) //combine all nouns here with a randomly selected future adjective
 	return a
 }
 
