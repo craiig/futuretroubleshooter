@@ -30,7 +30,8 @@ var futurebadadj = function(){
 		"angry",
 		"viral",
 		"memetic",
-		"sapient"
+		"sapient",
+		"crypto",
 	]
 }
 
@@ -90,6 +91,8 @@ var futureadj = function(){
 		"memetic",
 		"lagrangian",
 		"bionic",
+		"crypto",
+		"energy",
 	]
 }
 
@@ -117,7 +120,12 @@ var futurenouns = function(){
 }
 
 var futurephrase = function(){
-	return s(futureverbs( s(futurenouns()) )) ;
+	a = [
+		"maybe you should " + s(futureverbs( s(futurenouns()) )),
+		"you're gonna have to " + s(futureverbs( s(futurenouns()) )),
+		"sounds like you've got "+ c(s(futurebadadj()), s(futurebadnoun()))
+	]
+	return  s(a);
 }
 
 //basic test
@@ -125,7 +133,7 @@ console.log(futurephrase());
 
 //another way to test: generate until this word appears
 return
-test_str = "core"
+test_str = "warphole"
 do {
 	testphrase = futurephrase()	
 }
