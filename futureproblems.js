@@ -58,6 +58,7 @@ var futureverbs = function(noun){
 		"activate the",
 		"re-synergize the",
 		"regenerate the",
+		"traverse the",
 		"research modifications to the",
 	].map(function(e){ return e +" "+ noun });
 	a.push("recalculate the "+noun+" matrix");
@@ -120,6 +121,7 @@ var futurenouns = function(){
 
 var futurephrase = function(){
 	a = [
+		"",
 		"maybe you should",
 		"you're gonna have to",
 		"easy. just",
