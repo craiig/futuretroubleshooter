@@ -56,7 +56,7 @@ var futureverbs = function(noun){
 		"reboot the",
 		"use the",
 		"activate the",
-		"synergize the",
+		"re-synergize the",
 		"regenerate the",
 		"research modifications to the",
 	].map(function(e){ return e +" "+ noun });
@@ -124,6 +124,7 @@ var futurephrase = function(){
 		"you're gonna have to",
 		"easy. just",
 		"manual says to",
+		"cybergoogle says to",
 	].map(function(e){ return c(e, s(futureverbs( s(futurenouns()) )))})
 
 	a.push("sounds like you've got "+ c(s(futurebadadj()), s(futurebadnoun())) )
@@ -137,7 +138,7 @@ console.log(futurephrase());
 
 //another way to test: generate until this word appears
 return
-test_str = "warphole"
+test_str = "cybergoogle"
 do {
 	testphrase = futurephrase()	
 }
