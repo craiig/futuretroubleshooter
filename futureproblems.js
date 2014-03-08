@@ -85,6 +85,8 @@ var futureadj = function(){
 		"FTL",
 		"tachyon",
 		"spacetime",
+		"memetic",
+		"lagrangian"
 	]
 }
 
@@ -117,7 +119,7 @@ var futurephrase = function(){
 console.log(futurephrase());
 
 //another way to test: generate until this word appears
-test_str = "research"
+test_str = "lagrangian"
 do {
 	testphrase = futurephrase()	
 }
