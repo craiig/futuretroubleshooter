@@ -63,7 +63,6 @@ var futureverbs = function(noun){
 	a.push("recalculate the "+noun+" matrix");
 	a.push("verify the "+noun+" settings");
 	a.push("double check the "+noun+" for "+ c(s(futurebadadj()), s(futurebadnoun())) );
-	a.push("sounds like you've got "+ c(s(futurebadadj()), s(futurebadnoun())));
 	return a;
 	//.push("re-calculate the "+noun+" matrix")
 }
@@ -123,7 +122,9 @@ var futurephrase = function(){
 	a = [
 		"maybe you should " + s(futureverbs( s(futurenouns()) )),
 		"you're gonna have to " + s(futureverbs( s(futurenouns()) )),
-		"sounds like you've got "+ c(s(futurebadadj()), s(futurebadnoun()))
+		"sounds like you've got "+ c(s(futurebadadj()), s(futurebadnoun())),
+		"oh shit! " + c(s(futurebadadj()), s(futurebadnoun())) + "!",
+		"easy. just " + s(futureverbs( s(futurenouns()) )),
 	]
 	return  s(a);
 }
