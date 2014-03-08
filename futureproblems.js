@@ -120,13 +120,16 @@ var futurenouns = function(){
 
 var futurephrase = function(){
 	a = [
-		"maybe you should " + s(futureverbs( s(futurenouns()) )),
-		"you're gonna have to " + s(futureverbs( s(futurenouns()) )),
-		"sounds like you've got "+ c(s(futurebadadj()), s(futurebadnoun())),
-		"oh shit! " + c(s(futurebadadj()), s(futurebadnoun())) + "!",
-		"easy. just " + s(futureverbs( s(futurenouns()) )),
-	]
-	return  s(a);
+		"maybe you should",
+		"you're gonna have to",
+		"easy. just",
+		"manual says to",
+	].map(function(e){ return c(e, s(futureverbs( s(futurenouns()) )))})
+
+	a.push("sounds like you've got "+ c(s(futurebadadj()), s(futurebadnoun())) )
+	a.push( "oh shit! " + c(s(futurebadadj()), s(futurebadnoun())) + "!")
+
+	return s(a);
 }
 
 //basic test
