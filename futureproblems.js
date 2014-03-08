@@ -41,6 +41,9 @@ var futurebadnoun = function(){
 		"nanobots",
 		"selfies",
 		"cyberteens",
+		"wireheads",
+		"vr junkies",
+		"load imbalance"
 	])
 }
 
@@ -145,7 +148,7 @@ console.log(futurephrase());
 
 //another way to test: generate until this word appears
 return
-test_str = "make sure"
+test_str = "load imbalance"
 do {
 	testphrase = futurephrase()	
 }
