@@ -25,27 +25,27 @@ var s = function(array){ //randomly select an item from an array
 }
 
 var futurebadadj = function(){
-	return [
+	return s([
 		"",
 		"angry",
 		"viral",
 		"memetic",
 		"sapient",
 		"crypto",
-	]
+	])
 }
 
 var futurebadnoun = function(){
-	return [
+	return s([
 		"techroaches",
 		"nanobots",
 		"selfies",
 		"cyberteens",
-	]
+	])
 }
 
 var futureverbs = function(noun){
-	a = [
+	var a = [
 		"configure the",
 		"reconfigure the",
 		"reverse polarity on the",
@@ -63,13 +63,13 @@ var futureverbs = function(noun){
 	].map(function(e){ return e +" "+ noun });
 	a.push("recalculate the "+noun+" matrix");
 	a.push("verify the "+noun+" settings");
-	a.push("double check the "+noun+" for "+ c(s(futurebadadj()), s(futurebadnoun())) );
-	return a;
+	
+	return s(a);
 	//.push("re-calculate the "+noun+" matrix")
 }
 
 var futureadj = function(){
-	return [
+	return s([
 		"plasma",
 		"warp",
 		"wave",
@@ -93,11 +93,11 @@ var futureadj = function(){
 		"bionic",
 		"crypto",
 		"energy",
-	]
+	])
 }
 
 var futurenouns = function(){
-	a = [
+	var a = [
 		"coil",
 		"reactor",
 		"engine",
@@ -115,22 +115,24 @@ var futurenouns = function(){
 		"stardrive",
 		"warphole",
 		"scope",
-	].map(function(e){ return c(s(futureadj()), e)}) //combine all nouns here with a randomly selected future adjective
-	return a
+	].map(function(e){ return c(futureadj(), e)}) //combine all nouns here with a randomly selected future adjective
+	return s(a)
 }
 
 var futurephrase = function(){
-	a = [
+	var a = [
 		"",
 		"maybe you should",
 		"you're gonna have to",
 		"easy. just",
 		"manual says to",
-		"cybergoogle says to",
-	].map(function(e){ return c(e, s(futureverbs( s(futurenouns()) )))})
-
-	a.push("sounds like you've got "+ c(s(futurebadadj()), s(futurebadnoun())) )
-	a.push( "oh shit! " + c(s(futurebadadj()), s(futurebadnoun())) + "!")
+		"cybergoogle for how to",
+	].map(function(e){
+		return c(e, futureverbs( futurenouns() ))
+	});
+	a.push( "double check the "+ futurenouns() +" for "+ c(futurebadadj(), futurebadnoun()) );
+	a.push("sounds like you've got "+ c( futurebadadj(), futurebadnoun()) );
+	a.push( "oh shit! " + c(futurebadadj(), futurebadnoun()) + "!");
 
 	return s(a);
 }
@@ -140,7 +142,7 @@ console.log(futurephrase());
 
 //another way to test: generate until this word appears
 return
-test_str = "cybergoogle"
+test_str = "double check"
 do {
 	testphrase = futurephrase()	
 }
