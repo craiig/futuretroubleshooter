@@ -7,7 +7,9 @@
 // c(a,b) will combine two strings while ensuring there is only one space
 
 /* credit where credit's due:
-some words sourced from: http://www.catb.org/esr/sf-words/glossary.html
+some words sourced from:
+http://www.catb.org/esr/sf-words/glossary.html
+http://www.jessesword.com/sf/list/
 */
 
 var c = function(a, b){ //concat WITH SPACE (if needed)
@@ -86,7 +88,8 @@ var futureadj = function(){
 		"tachyon",
 		"spacetime",
 		"memetic",
-		"lagrangian"
+		"lagrangian",
+		"bionic",
 	]
 }
 
@@ -97,6 +100,7 @@ var futurenouns = function(){
 		"engine",
 		"coil converter",
 		"controller",
+		"core",
 		"network",
 		"interface",
 		"divider",
@@ -106,7 +110,8 @@ var futurenouns = function(){
 		"blaster",
 		"robot",
 		"stardrive",
-		"warphole"
+		"warphole",
+		"scope",
 	].map(function(e){ return c(s(futureadj()), e)}) //combine all nouns here with a randomly selected future adjective
 	return a
 }
@@ -120,7 +125,7 @@ console.log(futurephrase());
 
 //another way to test: generate until this word appears
 return
-test_str = "lagrangian"
+test_str = "core"
 do {
 	testphrase = futurephrase()	
 }
