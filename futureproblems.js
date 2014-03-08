@@ -129,6 +129,7 @@ var futurephrase = function(){
 		"easy. just",
 		"manual says to",
 		"cybergoogle for how to",
+		"make sure not to",
 	].map(function(e){
 		return c(e, futureverbs( futurenouns() ))
 	});
@@ -144,7 +145,7 @@ console.log(futurephrase());
 
 //another way to test: generate until this word appears
 return
-test_str = "double check"
+test_str = "make sure"
 do {
 	testphrase = futurephrase()	
 }
