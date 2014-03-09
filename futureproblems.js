@@ -4,7 +4,7 @@
 
 // utilities to help with generation:
 // s(array) will randomly select a phrase from the array
-// c(a,b) will combine two strings while ensuring there is only one space
+// c(a,b) will combine two (potentially empty) strings while ensuring there is only one space
 
 /* credit where credit's due:
 some words sourced from:
@@ -137,6 +137,9 @@ var futurephrase = function(){
 		"navigation console recommends to",
 		"cybergoogle for how to",
 		"make sure not to",
+		"query the dataweb for how to",
+		"who doesn't know how to",
+		"are you telling me you can't"
 	].map(function(e){
 		return c(e, futureverbs( futurenouns() ))
 	});
@@ -147,14 +150,23 @@ var futurephrase = function(){
 	return s(a);
 }
 
-//basic test
-console.log(futurephrase());
 
-//another way to test: generate until this word appears
-return
-test_str = "load imbalance"
-do {
-	testphrase = futurephrase()	
+//node stuff
+if(!module.parent){
+	//basic test
+	console.log(futurephrase());
+
+	//another way to test: generate until this word appears
+	return
+	test_str = "can't"
+	do {
+		testphrase = futurephrase()	
+	}
+	while( testphrase.indexOf(test_str) == -1 )
+	console.log(testphrase)
+
+} else {
+	module.exports = {
+		get_future : futurephrase,
+	}
 }
-while( testphrase.indexOf(test_str) == -1 )
-console.log(testphrase)

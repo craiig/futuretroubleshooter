@@ -1,3 +1,8 @@
+/* cheap script to get the access token and secret from twitter for an arbitrary account
+
+
+*/
+
 var OAuth = require('oauth').OAuth;
 
 var config = require('./config.js');

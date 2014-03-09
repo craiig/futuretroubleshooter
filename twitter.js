@@ -18,10 +18,9 @@ var T = new Twit(config.get())
 var stream = T.stream('user',  {replies: "all", with: "user"})
 
 stream.on('tweet', function(data) {
-    console.log(util.inspect(data));
-
 	if(data.in_reply_to_screen_name == botaccount){
         console.log("MESSAGE RECEIVED");
+        console.log(util.inspect(data));
 
         if( data.text.indexOf("help") != -1 ){
             console.log("HELP REQUESTED");
