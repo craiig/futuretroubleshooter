@@ -99,6 +99,7 @@ var futureadj = function(){
 		"bionic",
 		"crypto",
 		"energy",
+		"nanobot",
 	])
 }
 
@@ -150,10 +151,16 @@ var futurephrase = function(){
 	return s(a);
 }
 
+var futurehelp = function(word){
+	
+}
 
-//node stuff
+//figure out if running as a node module or not
 if(!module.parent){
-	//basic test
+
+	console.log(futurehelp("amy"));
+
+	//basic tests
 	console.log(futurephrase());
 
 	//another way to test: generate until this word appears
