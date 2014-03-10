@@ -52,18 +52,21 @@ function postTweet(msg){
 //set up response event
 stream.on('tweet', function(data) {
 	if(data.in_reply_to_screen_name == botaccount){
-        console.log("message from "+data.user.screen_name+": "+data.text);
-        //console.log(util.inspect(data));
 
-        if( data.text.indexOf("help me") != -1 || data.text.indexOf("help with") != -1 ){
-            console.log("\tHELP REQUESTED: ");
+
+        console.log("message from "+data.user.screen_name+": "+data.text);
+
+        phrase = data.text.replace(/@\w*/g, "")
+
+        thefuture.get_future_response(phrase, function(response){
 
             var post = {
-                status: "@"+data.user.screen_name+ " " + thefuture.get_future(),
+                status: "@"+data.user.screen_name+ " " + response,
                 in_reply_to_status_id: data.id_str,
             }
             postTweet(post);
-        }
+
+        });
         
 	}
 });
