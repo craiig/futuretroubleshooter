@@ -23,3 +23,9 @@ double check the energy warphole for angry techroaches
 manual says to invert the spacetime dispenser
 
 maybe you should buy a fresh lagrangian network
+
+who doesn't know how to buy a fresh lagrangian network
+
+you're gonna have to verify the habitat wizard settings
+
+double check the hyperspace scope for wireheads
