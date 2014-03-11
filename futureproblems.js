@@ -247,7 +247,7 @@ var futurephrase = function(){
 	a.push("new review - " + futurenouns() + " from " + makecompany());
 	a.push(futurenouns() + " unboxing video from " + makecompany());
 	a.push("rumor - upcoming " + futurenouns() + " announcement from " + makecompany());
-	a.push("new startup " + makecompany() + " will disrupt " + futurenouns());
+	a.push("new startup " + makecompany() + " will disrupt " + futurenouns() + " market");
 
 	return s(a);
 }
@@ -403,12 +403,12 @@ if(!module.parent){
 	console.log(futurephrase());
 
 	//another way to test: generate until this word appears
-	return
-	test_str = "wearable"
+	//return
+	test_str = "market"
 	do {
 		testphrase = futurephrase();
 	}
-	while( testphrase.indexOf(test_str) == -1 );
+	while( testphrase.toLowerCase().indexOf(test_str) == -1 );
 	console.log(testphrase)
 
 } else {
