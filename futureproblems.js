@@ -87,6 +87,7 @@ var makecompany = function(){
 		"Telecommunications",
 		"Simulations",
 		"BioFarms",
+		"Cyberrealities"
 	]
 
 	var suffix = {
@@ -185,7 +186,8 @@ var futureadj = function(){
 		"crypto",
 		"energy",
 		"nanobot",
-		"voight-kampff"
+		"voight-kampff",
+		"wearable"
 	])
 }
 
@@ -373,8 +375,10 @@ function make_response(phrase, callback){
 //figure out if running as a node module or not
 if(!module.parent){
 
+	console.log(makecompany());
+
 	//phrasing tests
-	if( 1 ){	
+	if( 0 ){	
 	make_response("how best to handle an overpopulated airbnb booking for a week?", console.log)
 	make_response("can you really help me with stuff?", console.log)
 	make_response("help me make coffee", console.log)
@@ -388,6 +392,7 @@ if(!module.parent){
 	make_response("You know nothing, spacehelper.", console.log)
 	make_response("can you give me some advice about dating?", console.log)
 	make_response("That sounds really uncomfortable.", console.log)
+	make_response("I want you to make more sense. Bad bot!", console.log)
 	/* make_response("help my car won't start", console.log);
 	make_response("i need help with my girlfriend", console.log);
 	make_response("help me stop your tweets", console.log);
@@ -399,7 +404,7 @@ if(!module.parent){
 
 	//another way to test: generate until this word appears
 	return
-	test_str = "biodogs"
+	test_str = "wearable"
 	do {
 		testphrase = futurephrase();
 	}
