@@ -67,7 +67,7 @@ var makecompany = function(){
 		"Hyper",
 		"Venture",
 		"Andreessen-Horowitz",
-		"Quantum,"
+		"Quantum"
 	]
 
 	var second = [
