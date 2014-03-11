@@ -5,7 +5,7 @@ var Twit = require('twit');
 var config = require('./config.js');
 
 var botaccount = "spacehelper"
-var tweetInterval = 30 * (60 * 1000); //in milliseconds
+var tweetInterval = 120 * (60 * 1000); //in milliseconds
 
 var thefuture = require('./futureproblems.js')
 
