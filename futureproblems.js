@@ -247,6 +247,20 @@ var futurenouns = function(){
 	return s(a)
 }
 
+var future_events_to_company = function(){
+	var a = [
+		"announcement",
+		"IPO",
+		"data leak",
+		"security",
+		"infestation",
+		"overflow",
+		"cyberflow",
+
+	];
+	return s(a);
+}
+
 var futurephrase = function(){
 	var a = [
 		"",
@@ -256,7 +270,7 @@ var futurephrase = function(){
 		"easy. just",
 		"manual says to",
 		"navigation console recommends to",
-		"cybergoogle for how to",
+		"metaquery wikipedia2 on how to",
 		"make sure not to",
 		"query the dataweb for how to",
 		"who doesn't know how to",
@@ -278,7 +292,8 @@ var futurephrase = function(){
 	a.push("promoted tweet: buy a new " + futurenouns()); // + " from " + makecompany());
 	a.push("new review - " + futurenouns()); // + " from " + makecompany());
 	a.push(futurenouns() + " unboxing video "); // + makecompany());
-	a.push("rumor - " + futurenouns() + " announcement");
+	a.push("rumor - " + c(futurenouns(), s(["announcement", "IPO"])) + s( ["", " from " + makecompany()] ) );
+	//a.push("don't panic - " + c(futurenouns(), future_events()) + s( ["", " from " + makecompany()] ) );
 	a.push(futurenouns() + " will disrupt " + futurenouns() + " market");
 
 	return s(a);
@@ -436,7 +451,7 @@ if(!module.parent){
 
 	//another way to test: generate until this word appears
 	//return
-	test_str = "disrupt"
+	test_str = "rumor"
 	do {
 		testphrase = futurephrase();
 	}
