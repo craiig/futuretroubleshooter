@@ -275,11 +275,11 @@ var futurephrase = function(){
 	//a.push( "too " + futureadj() + "; didn't " + futureverbs( futurenouns() ))
 	
 	//products
-	a.push("promoted tweet: buy a new " + futurenouns() + " from " + makecompany());
-	a.push("new review - " + futurenouns() + " from " + makecompany());
-	a.push(futurenouns() + " unboxing video from " + makecompany());
-	a.push("rumor - upcoming " + futurenouns() + " announcement from " + makecompany());
-	a.push("new startup " + makecompany() + " will disrupt " + futurenouns() + " market");
+	a.push("promoted tweet: buy a new " + futurenouns()); // + " from " + makecompany());
+	a.push("new review - " + futurenouns()); // + " from " + makecompany());
+	a.push(futurenouns() + " unboxing video "); // + makecompany());
+	a.push("rumor - " + futurenouns() + " announcement");
+	a.push(futurenouns() + " will disrupt " + futurenouns() + " market");
 
 	return s(a);
 }
@@ -436,7 +436,7 @@ if(!module.parent){
 
 	//another way to test: generate until this word appears
 	//return
-	test_str = "leech"
+	test_str = "disrupt"
 	do {
 		testphrase = futurephrase();
 	}
