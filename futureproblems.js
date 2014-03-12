@@ -113,6 +113,11 @@ var futurebadadj = function(){
 		"crypto",
 		"electromagnetic",
 		"antigen",
+		"bikini",
+		"nuclear",
+		"invisible",
+		"self-replicating",
+		"chimera",
 	])
 }
 
@@ -126,10 +131,25 @@ var futurebadnoun = function(){
 		"vr junkies",
 		"load imbalance",
 		"automaton bait",
+		"droids",
 		"cyberdragons",
 		"biodogs",
-
+		"commandos",
+		"turbulence",
+		"dataleeches",
 	])
+}
+
+var cyberfood = function(){
+	var a = [
+		"nutrient paste",
+		"soylent green",
+		"cyberdew",
+		"hyperliquour",
+		"craft brewed",
+		"romulan ale",
+		"pan galactic"
+	]
 }
 
 var futureverbs = function(noun){
@@ -184,10 +204,17 @@ var futureadj = function(){
 		"lagrangian",
 		"bionic",
 		"crypto",
+		"bikini",
+		"super",
 		"energy",
 		"nanobot",
 		"voight-kampff",
-		"wearable"
+		"wearable",
+		"sex-ray",
+		"dinosaur",
+		"demon",
+		"euclidean",
+		"non euclidean"
 	])
 }
 
@@ -202,16 +229,20 @@ var futurenouns = function(){
 		"network",
 		"interface",
 		"divider",
+		"shark",
+		"cyberjack",
 		"grammar",
 		"dispenser",
 		"guidance vector",
 		"wizard",
+		"droid",
 		"blaster",
 		"robot",
 		"stardrive",
 		"warphole",
 		"sleeve",
 		"scope",
+		"mixtape",
 	].map(function(e){ return c(futureadj(), e)}) //combine all nouns here with a randomly selected future adjective
 	return s(a)
 }
@@ -241,6 +272,7 @@ var futurephrase = function(){
 	a.push( "DIY " + s([ c(futurebadadj(), futurebadnoun()),  futurenouns()])  )
 	a.push( "420 " + futureverbs( futurenouns() ) + " every day" );
 	a.push( (Math.round(100 * Math.random()) )+ " reasons why you should " + futureverbs( futurenouns() ))
+	//a.push( "too " + futureadj() + "; didn't " + futureverbs( futurenouns() ))
 	
 	//products
 	a.push("promoted tweet: buy a new " + futurenouns() + " from " + makecompany());
@@ -375,7 +407,7 @@ function make_response(phrase, callback){
 //figure out if running as a node module or not
 if(!module.parent){
 
-	console.log(makecompany());
+	//console.log(makecompany());
 
 	//phrasing tests
 	if( 0 ){	
@@ -404,7 +436,7 @@ if(!module.parent){
 
 	//another way to test: generate until this word appears
 	//return
-	test_str = "market"
+	test_str = "leech"
 	do {
 		testphrase = futurephrase();
 	}
