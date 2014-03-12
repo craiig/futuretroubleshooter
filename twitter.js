@@ -78,6 +78,7 @@ var repeatTweet = setInterval(function(){
     }
     postTweet(post)
 }, tweetInterval);
+console.log("Set interval to "+tweetInterval);
 
 //set up console behaviour
 function startCommand(){
