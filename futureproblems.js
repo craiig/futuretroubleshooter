@@ -18,6 +18,8 @@ var WordPOS = require('wordpos'),
 var natural = require('natural'),
 	wordnet = new natural.WordNet();
 
+nounInflector = new natural.NounInflector();
+
 
 var c = function(a, b){ //concat WITH SPACE (if needed)
 	if(a == "" || b == ""){
@@ -123,6 +125,7 @@ var futurebadadj = function(){
 
 var futurebadnoun = function(){
 	return s([
+		"death cults",
 		"techroaches",
 		"nanobots",
 		"selfies",
@@ -137,6 +140,7 @@ var futurebadnoun = function(){
 		"commandos",
 		"turbulence",
 		"dataleeches",
+		"cybrarians",
 	])
 }
 
@@ -267,10 +271,12 @@ var futurephrase = function(){
 		"maybe you should",
 		"you're gonna have to",
 		"have you tried to",
+		"have you ever tried to",
 		"easy. just",
 		"manual says to",
 		"navigation console recommends to",
 		"metaquery wikipedia2 on how to",
+		"dust off the encyclowiki for how to",
 		"make sure not to",
 		"query the dataweb for how to",
 		"who doesn't know how to",
@@ -295,6 +301,7 @@ var futurephrase = function(){
 	a.push("rumor - " + c(futurenouns(), s(["announcement", "IPO"])) + s( ["", " from " + makecompany()] ) );
 	//a.push("don't panic - " + c(futurenouns(), future_events()) + s( ["", " from " + makecompany()] ) );
 	a.push(futurenouns() + " will disrupt " + futurenouns() + " market");
+	a.push(nounInflector.pluralize(futurenouns()) + " are mega-trending with " + c( futurebadadj(), futurebadnoun()) );
 
 	return s(a);
 }
@@ -451,7 +458,7 @@ if(!module.parent){
 
 	//another way to test: generate until this word appears
 	//return
-	test_str = "rumor"
+	test_str = "cybrarians"
 	do {
 		testphrase = futurephrase();
 	}
