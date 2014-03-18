@@ -69,7 +69,7 @@ var makecompany = function(){
 		"Hyper",
 		"Venture",
 		"Andreessen-Horowitz",
-		"Quantum"
+		"Quantum",
 	]
 
 	var second = [
@@ -181,7 +181,6 @@ var futureverbs = function(noun){
 	a.push("verify the "+noun+" settings");
 	
 	return s(a);
-	//.push("re-calculate the "+noun+" matrix")
 }
 
 var futureadj = function(){
@@ -218,7 +217,9 @@ var futureadj = function(){
 		"dinosaur",
 		"demon",
 		"euclidean",
-		"non euclidean"
+		"non euclidean",
+		"everyday",
+		"practical"
 	])
 }
 
@@ -291,7 +292,8 @@ var futurephrase = function(){
 	a.push( "disregard " + c(futurebadadj(), futurebadnoun()) + " acquire " + futurenouns());
 	a.push( "DIY " + s([ c(futurebadadj(), futurebadnoun()),  futurenouns()])  )
 	a.push( "420 " + futureverbs( futurenouns() ) + " every day" );
-	a.push( (Math.round(100 * Math.random()) )+ " reasons why you should " + futureverbs( futurenouns() ))
+	a.push( (Math.round(100 * Math.random()) )+ " reasons why you should " + futureverbs( futurenouns() ));
+	a.push( "monetize " + c(futurebadadj(), futurebadnoun()) );
 	//a.push( "too " + futureadj() + "; didn't " + futureverbs( futurenouns() ))
 	
 	//products
@@ -458,7 +460,7 @@ if(!module.parent){
 
 	//another way to test: generate until this word appears
 	//return
-	test_str = "cybrarians"
+	test_str = "monetiz"
 	do {
 		testphrase = futurephrase();
 	}
