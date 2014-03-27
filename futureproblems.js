@@ -51,6 +51,11 @@ var sp = function(dict){ //randomly return an item based on a probability
 	return dict[1]; //default
 }
 
+var p = function(s){
+	//pluralize
+	return nounInflector.pluralize(s)
+}
+
 
 var makecompany = function(){
 	var first = [
@@ -120,6 +125,7 @@ var futurebadadj = function(){
 		"invisible",
 		"self-replicating",
 		"chimera",
+		"steampunk",
 	])
 }
 
@@ -141,6 +147,7 @@ var futurebadnoun = function(){
 		"turbulence",
 		"dataleeches",
 		"cybrarians",
+		"commentspam",
 	])
 }
 
@@ -158,6 +165,7 @@ var cyberfood = function(){
 
 var futureverbs = function(noun){
 	var a = [
+		"swizzle the",
 		"configure the",
 		"reconfigure the",
 		"reverse polarity of the",
@@ -294,6 +302,7 @@ var futurephrase = function(){
 	a.push( "420 " + futureverbs( futurenouns() ) + " every day" );
 	a.push( (Math.round(100 * Math.random()) )+ " reasons why you should " + futureverbs( futurenouns() ));
 	a.push( "monetize " + c(futurebadadj(), futurebadnoun()) );
+	a.push(c(futurebadadj(), futurebadnoun()) + " are ruining " + p( futurenouns() ))
 	//a.push( "too " + futureadj() + "; didn't " + futureverbs( futurenouns() ))
 	
 	//products
@@ -303,7 +312,7 @@ var futurephrase = function(){
 	a.push("rumor - " + c(futurenouns(), s(["announcement", "IPO"])) + s( ["", " from " + makecompany()] ) );
 	//a.push("don't panic - " + c(futurenouns(), future_events()) + s( ["", " from " + makecompany()] ) );
 	a.push(futurenouns() + " will disrupt " + futurenouns() + " market");
-	a.push(nounInflector.pluralize(futurenouns()) + " are mega-trending with " + c( futurebadadj(), futurebadnoun()) );
+	a.push(p(futurenouns()) + " are mega-trending with " + c( futurebadadj(), futurebadnoun()) );
 
 	return s(a);
 }
@@ -460,7 +469,7 @@ if(!module.parent){
 
 	//another way to test: generate until this word appears
 	//return
-	test_str = "monetiz"
+	test_str = "ruining"
 	do {
 		testphrase = futurephrase();
 	}
