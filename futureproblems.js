@@ -56,6 +56,14 @@ var p = function(s){
 	return nounInflector.pluralize(s)
 }
 
+var nospace = function(s){
+	return s.replace(/\s/g, "");
+}
+
+var nodash = function(s){
+	return s.replace(/-/g, "");
+}
+
 
 var makecompany = function(){
 	var first = [
@@ -75,10 +83,12 @@ var makecompany = function(){
 		"Venture",
 		"Andreessen-Horowitz",
 		"Quantum",
+		"Oculus"
 	]
 
 	var second = [
 		//"",
+		"Book",
 		"Cyberdynamics",
 		"Galactic",
 		"Systems",
@@ -226,8 +236,8 @@ var futureadj = function(){
 		"demon",
 		"euclidean",
 		"non euclidean",
-		"everyday",
-		"practical"
+		"practical",
+		"declarative",
 	])
 }
 
@@ -260,12 +270,12 @@ var futurenouns = function(){
 	return s(a)
 }
 
-var future_events_to_company = function(){
+var future_events = function(){
 	var a = [
 		"announcement",
 		"IPO",
 		"data leak",
-		"security",
+		"security breach",
 		"infestation",
 		"overflow",
 		"cyberflow",
@@ -309,10 +319,27 @@ var futurephrase = function(){
 	a.push("promoted tweet: buy a new " + futurenouns()); // + " from " + makecompany());
 	a.push("new review - " + futurenouns()); // + " from " + makecompany());
 	a.push(futurenouns() + " unboxing video "); // + makecompany());
-	a.push("rumor - " + c(futurenouns(), s(["announcement", "IPO"])) + s( ["", " from " + makecompany()] ) );
-	//a.push("don't panic - " + c(futurenouns(), future_events()) + s( ["", " from " + makecompany()] ) );
+	//a.push("rumor - " + c(futurenouns(), s(["announcement", "IPO"])) + s( ["", " from " + makecompany()] ) );
+	a.push(s(["don't panic", "rumor", "breaking"]) + " - " + c(futurenouns(), future_events()) + s( ["", " from " + makecompany()] ) );
 	a.push(futurenouns() + " will disrupt " + futurenouns() + " market");
 	a.push(p(futurenouns()) + " are mega-trending with " + c( futurebadadj(), futurebadnoun()) );
+
+	var x = futureverbs( futurenouns() );
+	var y_noun = futurenouns();
+	var y = futureverbs( y_noun );
+	a.push("i have come here to " + y + " and " + x + ", and i'm all outta " + p(y_noun))
+
+	a.push("can you believe these "+ p(futurenouns()) + s(["", " have "+c( futurebadadj(), futurebadnoun())]))
+
+	var subreddit = c(futurebadadj(), s([p(futurenouns()), futurebadnoun()]) )
+	a.push(s(["into", "got", "like", "problems with"]) + " " + subreddit +"? subscribe to /r/"+ nodash(nospace(subreddit)));
+
+	var bad = c( futurebadadj(), futurebadnoun());
+	var good = futurenouns();
+	var what = s(["harm", "help", "aid", "stop", "block", "support", "correlate with"])
+	a.push("new study finds " + bad + " "+what+" " + p(good));
+
+	a.push("do you really need "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]) + "?");
 
 	return s(a);
 }
@@ -469,7 +496,7 @@ if(!module.parent){
 
 	//another way to test: generate until this word appears
 	//return
-	test_str = "ruining"
+	test_str = "rumor"
 	do {
 		testphrase = futurephrase();
 	}
