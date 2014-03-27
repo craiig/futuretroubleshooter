@@ -5,6 +5,9 @@ in the future there's lots of broken stuff that can only be fixed with judicious
 
 this is your swiss cyberarmy knife.
 
+'npm install XX' til it works
+npm install https://github.com/spencermountain/nlp_comprimise/archive/master.tar.gz
+
 ## Get started ##
 node futureproblems.js
 

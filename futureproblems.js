@@ -12,11 +12,15 @@ http://www.catb.org/esr/sf-words/glossary.html
 http://www.jessesword.com/sf/list/
 */
 
+var fs = require('fs');
+
 var WordPOS = require('wordpos'),
     wordpos = new WordPOS();
 
 var natural = require('natural'),
 	wordnet = new natural.WordNet();
+
+var nlp = require('nlp_comprimise');
 
 nounInflector = new natural.NounInflector();
 
@@ -62,6 +66,26 @@ var nospace = function(s){
 
 var nodash = function(s){
 	return s.replace(/-/g, "");
+}
+
+var symplural = function(a){
+	//how bad is this?
+	sing = nlp.singularize(a);
+	if(sing){
+		return nlp.pluralize(sing);
+	} else {
+		return nlp.pluralize(a);
+	}
+}
+
+var symsingle = function(a){
+	//how bad is this?
+	sing = nlp.singularize(a);
+	if(sing){
+		return sing;
+	} else {
+		return a;
+	}
 }
 
 
@@ -136,6 +160,7 @@ var futurebadadj = function(){
 		"self-replicating",
 		"chimera",
 		"steampunk",
+		"obsessive",
 	])
 }
 
@@ -167,9 +192,9 @@ var cyberfood = function(){
 		"soylent green",
 		"cyberdew",
 		"hyperliquour",
-		"craft brewed",
+		"craft brew",
 		"romulan ale",
-		"pan galactic"
+		"synthahol",
 	]
 }
 
@@ -190,10 +215,13 @@ var futureverbs = function(noun){
 		"phase shift the",
 		"regenerate the",
 		"traverse the",
+		"observe the",
+		"perceive the",
 		"research modifications to the",
 		"resleeve the",
 		"smoke the",
 		"avoid the",
+		"dechlorinate the",
 	].map(function(e){ return e +" "+ noun });
 	a.push("recalculate the "+noun+" matrix");
 	a.push("verify the "+noun+" settings");
@@ -219,6 +247,8 @@ var futureadj = function(){
 		"memetic",
 		"hyperspace",
 		"FTL",
+		"color",
+		"gamma",
 		"tachyon",
 		"spacetime",
 		"memetic",
@@ -231,6 +261,7 @@ var futureadj = function(){
 		"nanobot",
 		"voight-kampff",
 		"wearable",
+		"culture",
 		"sex-ray",
 		"dinosaur",
 		"demon",
@@ -239,6 +270,15 @@ var futureadj = function(){
 		"practical",
 		"declarative",
 	])
+}
+
+var futurepeople = function(){
+	var a = [
+		"jazzpunk",
+		"cyberpunk",
+		"engineer",
+		"cane toad",
+	]
 }
 
 var futurenouns = function(){
@@ -255,6 +295,9 @@ var futurenouns = function(){
 		"shark",
 		"cyberjack",
 		"grammar",
+		"moderator",
+		"modem",
+		"modulator",
 		"dispenser",
 		"guidance vector",
 		"wizard",
@@ -263,9 +306,13 @@ var futurenouns = function(){
 		"robot",
 		"stardrive",
 		"warphole",
+		"tank",
+		"sweater",
+		"tube",
 		"sleeve",
 		"scope",
 		"mixtape",
+		"flange",
 	].map(function(e){ return c(futureadj(), e)}) //combine all nouns here with a randomly selected future adjective
 	return s(a)
 }
@@ -312,7 +359,7 @@ var futurephrase = function(){
 	a.push( "420 " + futureverbs( futurenouns() ) + " every day" );
 	a.push( (Math.round(100 * Math.random()) )+ " reasons why you should " + futureverbs( futurenouns() ));
 	a.push( "monetize " + c(futurebadadj(), futurebadnoun()) );
-	a.push(c(futurebadadj(), futurebadnoun()) + " are ruining " + p( futurenouns() ))
+	a.push(c(futurebadadj(), futurebadnoun()) + ": ruining " + p( futurenouns() ) + "?")
 	//a.push( "too " + futureadj() + "; didn't " + futureverbs( futurenouns() ))
 	
 	//products
@@ -339,7 +386,8 @@ var futurephrase = function(){
 	var what = s(["harm", "help", "aid", "stop", "block", "support", "correlate with"])
 	a.push("new study finds " + bad + " "+what+" " + p(good));
 
-	a.push("do you really need "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]) + "?");
+	a.push("do you really need "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]) + "?");	
+	a.push("sorry to hear about your "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]))
 
 	return s(a);
 }
@@ -380,55 +428,45 @@ var futurehelpwith = function(word){
 		c(simply(), futureverbs( word )),
 		c(simply(), futureverbs( word )) + " and then " + futureverbs( futurenouns() ),
 		"disregard " + word + " acquire " + futurenouns(),
-	]
+	];
 	return s(a)
 }
 
+var futurequestions = function(term){
+	var a = [
+		"no",
+		"signs point to maybe",
+		"signs point to " + futurenouns(),
+		"ask again later",
+		"without a doubt",
+		"dubious",
 
-function wordpos_filter(phrase, callback){
-	//clean up the given phrase using wordpos to isolate a couple nouns
-	//callback(words)
-	wordpos.getPOS(phrase, function(results){
-		console.log(results);
-
-		var orig_nouns = results.nouns.slice(0); //make a copy of the original nouns
-		var nouns = results.nouns;
-		results.nouns = []
-
-		for( proparray in results ){
-			for(i in results[proparray]){
-				var word = results[proparray][i]
-				var pos = nouns.indexOf(word)
-				if(pos != -1){
-					nouns.splice(pos, 1);
-				}
-			}
-		}
-
-		if(nouns.length == 0){ //fallback incase we eliminated all nouns
-			if(results.rest.length > 0){
-				for(i in results.rest){
-					nouns.push(results.rest[i])
-				}
-			} else {	
-				nouns = orig_nouns
-			}
-		}
-
-		//filter out other words
-		filter = ["help", "you", "spacehelper"]
-		for( i in nouns ){
-			w = nouns[i].toLowerCase();
-			pos = filter.indexOf(w)
-			if(pos != -1){
-				nouns.splice(pos, 1);
-			}
-		}
-
-		console.log(nouns.join(" "))
-		callback( nouns.join(" ") )
-	});
+		//from an 8-ball list
+		"it is certain",
+		"it is decidedly so",
+		"without a doubt",
+		"yes definitely",
+		"you may rely on it, " + symsingle(futurebadnoun()),
+		"as i see it, yes",
+		"most likely",
+		"outlook good if you "+futureverbs( futurenouns() ),
+		"yes",
+		"signs point to yes",
+		"reply hazy try again after you "+futureverbs( futurenouns() ),
+		futureverbs( futurenouns() ) + " and ask again later",
+		//"better not tell you now",
+		"better not tell you before you "+futureverbs( futurenouns() ),
+		"cannot predict now",
+		"concentrate on " + c(futurebadadj(), symplural(futurebadnoun())) + " and ask again",
+		"don't count on it, " + nlp.singularize(futurebadnoun()),
+		"my reply is no",
+		"my "+ c(futurebadadj(), symplural(futurebadnoun())) + " say no",
+		"outlook not so good",
+		"very doubtful",
+	];
+	return s(a);
 }
+
 
 function extract_help(phrase){
 	// help me with X
@@ -436,32 +474,183 @@ function extract_help(phrase){
 	// help with X
 	//returns X
 	res = [
-		/help .*? with (.*)/gm,
-		/help me (.*)/gm,
-		/help (.*)/gm,
+		/help .*? with my (.*)/igm,
+		/help .*? with (.*)/igm,
+		/help with your (.*)/igm,
+		/help with my (.*)/igm,
+		/help with (.*)/igm,
+		/help me (.*)/igm,
+		//help (.*)/igm,
 	]
 
 	for(i in res){
 		re = res[i];
 		match = re.exec(phrase);
 		if(match){
-			return match[1];
+			return match[1].replace(/[\.?]/g, ""); //eliminate punctuation
 		}
+	}
+	return null;
+}
+
+function is_question(phrase){
+	phrase = phrase.trim();
+	if(phrase.slice(-1) == "?"){
+		return true;
+	} else {
+		return false;
 	}
 }
 
-function make_response(phrase, callback){
-	//glue together the text extractor and wordpos filter
-	//phrase = extract_help(phrase);
-
-	wordpos_filter(phrase, function(noun){
-		if(noun == ""){ //couldn't get anything from the filter
-			console.log("wordpos-filter couldn't deal with: "+phrase);
-			callback(futurephrase())
-		} else {
-			callback(futurehelpwith(noun));
+function get_nn(terms){
+	//helper to detect NN in a tagged sentence from nlp
+	var ret = []
+	for(var i in terms){
+		term = terms[i];
+		if(term.pos.tag == "NN" || term.pos.tag == "NNS"){
+			ret.push(term);
 		}
-	});
+	}
+	return ret;
+}
+
+function get_jj(terms){
+	//helper to detect NN in a tagged sentence from nlp
+	var ret = []
+	for(var i in terms){
+		term = terms[i];
+		if(term.pos.tag == "JJ"){
+			ret.push(term);
+		}
+	}
+	return ret;
+}
+
+function terms_fix(terms){
+	//post process terms to remove some annoying things
+	for(var i in terms){
+		var term = terms[i];
+		term.word = term.word.replace(/^you\s?/i, "");
+
+		if(term.word == ""){
+			terms.splice(i);
+		}
+	}
+
+	return terms;
+}
+
+function make_response(phrase, callback){
+	//eliminate some annoying stuff
+	var phrase = phrase.replace(/\s*@?spacehelper/g, "");
+	phrase = phrase.replace(/https?:\/\/[^\s]*/g, "");
+
+	//parse this with the help_with extractor
+	var help_with = extract_help(phrase);
+	
+	//try to find entities
+	var sentences = nlp.sentences(phrase);
+
+	//split up sentences even more, because I disagree with the handling of questions by nlp
+	for(var i in sentences){
+		//sentences.splice(i, 1, sentences[i].split("?"));
+		
+		//fix up the split to  include the question mark (helps out nlp)
+		var split = sentences[i].split("?");
+		if(split.length > 1){
+			for(var j=0; j< (split.length-1); j++){
+				split[j] = split[j] + "?"
+			}
+		}
+
+		Array.prototype.splice.apply(sentences, [i,1].concat(split)); //omg
+	}
+
+	//combine all terms together from the named entity spotter
+	var terms = []
+	for(var i in sentences){
+		var words = nlp.spot(sentences[i]);
+		if(words.length){
+			for(var w in words){
+				terms.push(words[w]);
+			}
+		}
+	}
+
+	terms = terms_fix(terms); //fix up terms here beause we might drop some
+
+	//extract terms directly from the tags if we're out of luck with the above
+	if(terms.length == 0){
+		var tags = nlp.tag(phrase);
+		var nn = terms_fix(get_nn(tags));
+		var jj = get_jj(tags);
+		var candidates;
+
+		if(nn.length > 0){
+			candidates = nn;
+		} else if(jj.length > 0){
+			candidates = jj;
+		}
+
+		for(var i in candidates){
+			tag = candidates[i];
+			push = 0;
+			tag.word = tag.word.replace( /[.\?!]/g, ""); //clean up the word a bit
+			terms.push(tag);
+		}
+	}
+
+	terms = terms_fix(terms); //fix up terms again
+
+	//select best term (if any)
+	/*var best_term;
+	if(terms.length > 0){
+		best_term = s(terms).word; //randomly select a term
+	}*/
+
+	//debug section
+	/*console.log("phrase: "+phrase);
+	if(help_with){
+		console.log("help with: "+help_with)
+	}
+
+	console.log("is question: " + "" + (is_question(phrase) ? "yes" : "no")  );
+	console.log("sentences:");
+	console.log(sentences);
+	//console.log("nlp tag:");
+	//console.log(nlp.tag(phrase));
+	console.log("terms:")
+	console.log(terms);
+	console.log("--")*/
+
+
+	//figure out potential responses
+	var potential = []; 
+
+	//prefer help with over all else:
+	if(help_with){
+		potential.push( futurehelpwith(help_with) );
+	}
+
+	if(terms.length > 0){
+		for(var i in terms){
+			var t = terms[i];
+			potential.push( futurehelpwith(t.word) );
+		}
+	}
+
+	if (is_question(phrase)){
+			potential.push( futurequestions() );
+		}
+	if(potential.length == 0){
+		//if (is_question(phrase)){
+		//	potential.push( futurequestions(best_term) );
+		//}
+		potential.push( futurephrase() );
+		
+	}
+
+	callback(s(potential));
 }
 
 //figure out if running as a node module or not
@@ -469,7 +658,16 @@ if(!module.parent){
 
 	//console.log(makecompany());
 
-	//phrasing tests
+	if( 0 ){ //test against all mentions so far
+		var mentions = fs.readFileSync('test_mentions.txt');
+		var lines = mentions.toString().split("\n");
+		for(var i in lines){
+			make_response(lines[i], console.log);
+		}
+	}
+
+	//basic phrasing tests
+	//make_response("am i any more intelligent spacehelper?", console.log);
 	if( 0 ){	
 	make_response("how best to handle an overpopulated airbnb booking for a week?", console.log)
 	make_response("can you really help me with stuff?", console.log)
@@ -485,10 +683,13 @@ if(!module.parent){
 	make_response("can you give me some advice about dating?", console.log)
 	make_response("That sounds really uncomfortable.", console.log)
 	make_response("I want you to make more sense. Bad bot!", console.log)
-	/* make_response("help my car won't start", console.log);
+	make_response("i need help with my coffeemaker", console.log)
+	make_response(" aren't you tired? ", console.log)
+	make_response("hey there http://derps.com/derps", console.log)
+	make_response("help my car won't start", console.log);
 	make_response("i need help with my girlfriend", console.log);
 	make_response("help me stop your tweets", console.log);
-	make_response("i need help with escaping from space prison", console.log);*/
+	make_response("are you feeling any more intelligent spacehelper?", console.log);
 	}
 
 	//basic tests
@@ -496,9 +697,10 @@ if(!module.parent){
 
 	//another way to test: generate until this word appears
 	//return
-	test_str = "rumor"
+	test_str = "it is"
 	do {
-		testphrase = futurephrase();
+		//testphrase = futurephrase();
+		testphrase = futurequestions();
 	}
 	while( testphrase.toLowerCase().indexOf(test_str) == -1 );
 	console.log(testphrase)
