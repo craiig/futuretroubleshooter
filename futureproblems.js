@@ -161,6 +161,9 @@ var futurebadadj = function(){
 		"chimera",
 		"steampunk",
 		"obsessive",
+		"crowdfunded",
+		"big data",
+		"post-scarcity",
 	])
 }
 
@@ -177,12 +180,17 @@ var futurebadnoun = function(){
 		"automaton bait",
 		"droids",
 		"cyberdragons",
+		"makerfaires",
+		"hackathons",
 		"biodogs",
 		"commandos",
+		"gamedevs",
 		"turbulence",
 		"dataleeches",
 		"cybrarians",
 		"commentspam",
+		"cybercriminals",
+		"brand ambassadors",
 	])
 }
 
@@ -222,6 +230,7 @@ var futureverbs = function(noun){
 		"smoke the",
 		"avoid the",
 		"dechlorinate the",
+		"crowdfund the",
 	].map(function(e){ return e +" "+ noun });
 	a.push("recalculate the "+noun+" matrix");
 	a.push("verify the "+noun+" settings");
@@ -233,7 +242,7 @@ var futureadj = function(){
 	return s([
 		"plasma",
 		"warp",
-		"wave",
+		"wavelet",
 		"eldritch",
 		"habitat",
 		"laser",
@@ -256,6 +265,8 @@ var futureadj = function(){
 		"bionic",
 		"crypto",
 		"bikini",
+		"empty",
+		"overflow",
 		"super",
 		"energy",
 		"nanobot",
@@ -269,6 +280,10 @@ var futureadj = function(){
 		"non euclidean",
 		"practical",
 		"declarative",
+		"party",
+		"command",
+		"sentient",
+		"biogarbage",
 	])
 }
 
@@ -307,12 +322,23 @@ var futurenouns = function(){
 		"stardrive",
 		"warphole",
 		"tank",
-		"sweater",
+		"cargosweater",
 		"tube",
 		"sleeve",
 		"scope",
 		"mixtape",
+		"cybersweater",
+		"nanosweater",
+		"makerfaire",
+		"hackspace",
+		"roadtrip",
+		"cyberweb",
 		"flange",
+		"casserole",
+		"cyberchip",
+		"starship",
+		"coffeebot",
+		"gurubot",
 	].map(function(e){ return c(futureadj(), e)}) //combine all nouns here with a randomly selected future adjective
 	return s(a)
 }
@@ -388,6 +414,8 @@ var futurephrase = function(){
 
 	a.push("do you really need "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]) + "?");	
 	a.push("sorry to hear about your "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]))
+
+	a.push("some of my best friends are "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]))
 
 	return s(a);
 }
@@ -697,10 +725,10 @@ if(!module.parent){
 
 	//another way to test: generate until this word appears
 	//return
-	test_str = "it is"
+	test_str = "gurubot"
 	do {
-		//testphrase = futurephrase();
-		testphrase = futurequestions();
+		testphrase = futurephrase();
+		//testphrase = futurequestions();
 	}
 	while( testphrase.toLowerCase().indexOf(test_str) == -1 );
 	console.log(testphrase)
