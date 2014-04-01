@@ -258,6 +258,7 @@ var cyberfood = function(){
 		"polygrains",
 		"cryptokimchi",
 		"astrokraut",
+		"astropickles",
 		"PIZZA",
 		"roast polychicken",
 		"potato salad(tm)",
@@ -508,7 +509,6 @@ var futurephrase = function(){
 	a.push("BYO "+ cyberfood().toUpperCase());
 	a.push("fresh homemade "+cyberfood());
 	a.push("go eat "+cyberfood()+ " on a mountain");
-	a.push("")
 
 
 
