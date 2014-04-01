@@ -107,7 +107,17 @@ var makecompany = function(){
 		"Venture",
 		"Andreessen-Horowitz",
 		"Quantum",
-		"Oculus"
+		"Oculus",
+		"Turbo",
+		"Maximum",
+		"Minimum",
+		"Average",
+		"Acceptable",
+		"Transparent",
+		"Dreamy",
+		"Delectable",
+		"Delicious",
+		"Sunbeam",
 	]
 
 	var second = [
@@ -128,7 +138,11 @@ var makecompany = function(){
 		"Telecommunications",
 		"Simulations",
 		"BioFarms",
-		"Cyberrealities"
+		"Cyberrealities",
+		"Tarantulas",
+		"Space Cakes",
+		"Cephalopods",
+
 	]
 
 	var suffix = {
@@ -164,6 +178,13 @@ var futurebadadj = function(){
 		"crowdfunded",
 		"big data",
 		"post-scarcity",
+		"terrible",
+		"screaming",
+		"blithely",
+		"cultured",
+		"owl-faced",
+		"chemical",
+		"acidic",
 	])
 }
 
@@ -191,19 +212,57 @@ var futurebadnoun = function(){
 		"commentspam",
 		"cybercriminals",
 		"brand ambassadors",
+		"teenage witches",
+		"freelancers",
+		"nanocyclists",
+		"spaceghosts",
+		"cyberdentists",
+		"cyberdoctors",
+		"homeopaths",
+		"cyberjugglers",
+		"cyber capitalists",
+		"cyber communists",
+		"cyberdetectives",
+		"fembots",
+		"vampyres",
 	])
 }
 
 var cyberfood = function(){
 	var a = [
 		"nutrient paste",
-		"soylent green",
 		"cyberdew",
 		"hyperliquour",
 		"craft brew",
 		"romulan ale",
 		"synthahol",
+		"cybernoodles",
+		"orbitz",
+		"cybernerds",
+		"hypertomatoes",
+		"cyberbeans",
+		"beambroth",
+		"megacheese",
+		"cryomelon",
+		"spacebananas",
+		"nanoberries",
+		"rocket",
+		"astro-juice",
+		"biobread",
+		"biobutter",
+		"polybutter",
+		"polycake",
+		"astrobacon",
+		"polymeats",
+		"polydairy",
+		"polygrains",
+		"cryptokimchi",
+		"astrokraut",
+		"PIZZA",
+		"roast polychicken",
+		"potato salad(tm)",
 	]
+	return s(a);
 }
 
 var futureverbs = function(noun){
@@ -231,6 +290,24 @@ var futureverbs = function(noun){
 		"avoid the",
 		"dechlorinate the",
 		"crowdfund the",
+		"cry into the",
+		"alienate the",
+		"spoon the",
+		"eat the",
+		"go swimming with the",
+		"bake the",
+		"crowdsource the",
+		"move into the",
+		"brainsteal the",
+		"spiderize the",
+		"unicornize the",
+		"sob into the",
+		"google talk to the",
+		"dream of the",
+		"stuff the",
+		"cram the",
+		"scandalize the",
+		"spacewalk the",
 	].map(function(e){ return e +" "+ noun });
 	a.push("recalculate the "+noun+" matrix");
 	a.push("verify the "+noun+" settings");
@@ -336,9 +413,12 @@ var futurenouns = function(){
 		"flange",
 		"casserole",
 		"cyberchip",
+		"astro-juice",
 		"starship",
 		"coffeebot",
 		"gurubot",
+		"pointer",
+		"space cat",
 	].map(function(e){ return c(futureadj(), e)}) //combine all nouns here with a randomly selected future adjective
 	return s(a)
 }
@@ -416,6 +496,21 @@ var futurephrase = function(){
 	a.push("sorry to hear about your "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]))
 
 	a.push("some of my best friends are "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]))
+
+	a.push("go to town on your " + cyberfood());
+	a.push("dish up the " + cyberfood())
+	a.push("spend some time with " + cyberfood());
+	//a.push("add " + s([1,2,4]) )
+	a.push("having a picnic? bring " + cyberfood());
+	a.push("having brunch? i recommend " + cyberfood());
+	a.push("cook up a storm with " + cyberfood());
+	a.push("BE HEALTHY FOREVER BY EATING " + cyberfood().toUpperCase() );
+	a.push("BYO "+ cyberfood().toUpperCase());
+	a.push("fresh homemade "+cyberfood());
+	a.push("go eat "+cyberfood()+ " on a mountain");
+	a.push("")
+
+
 
 	return s(a);
 }
@@ -725,12 +820,12 @@ if(!module.parent){
 
 	//another way to test: generate until this word appears
 	//return
-	test_str = "gurubot"
+	test_str = "fembots"
 	do {
 		testphrase = futurephrase();
 		//testphrase = futurequestions();
 	}
-	while( testphrase.toLowerCase().indexOf(test_str) == -1 );
+	while( testphrase.toLowerCase().indexOf(test_str.toLowerCase()) == -1 );
 	console.log(testphrase)
 
 } else {
