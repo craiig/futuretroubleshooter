@@ -259,6 +259,7 @@ var cyberfood = function(){
 		"cryptokimchi",
 		"astrokraut",
 		"astropickles",
+		"roboberries",
 		"PIZZA",
 		"roast polychicken",
 		"potato salad(tm)",
