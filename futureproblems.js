@@ -25,12 +25,22 @@ var nlp = require('nlp_comprimise');
 nounInflector = new natural.NounInflector();
 
 
-var c = function(a, b){ //concat WITH SPACE (if needed)
+/*var c = function(a, b){ //concat WITH SPACE (if needed)
 	if(a == "" || b == ""){
 		return a + b;
 	} else {
 		return a + " " + b
 	}
+}*/
+var c = function(){ //concat all arguments passed in
+	var s = []
+	for(var i=0; i<arguments.length; i++){ //directly using arguments.join(" ") didn't seem to work.
+		if(arguments[i] != ""){
+			s.push(arguments[i])
+		}
+	}
+	a = s.join(" ")
+	return a;
 }
 
 var s = function(array){ //randomly select an item from an array
@@ -267,57 +277,65 @@ var cyberfood = function(){
 	return s(a);
 }
 
-var futureverbs = function(noun){
+var verb = function(){
 	var a = [
-		"swizzle the",
-		"configure the",
-		"reconfigure the",
-		"reverse polarity of the",
-		"invert the",
-		"replace the",
-		"charge the",
-		"buy a fresh",
-		"reboot the",
-		"use the",
-		"activate the",
-		"re-synergize the",
-		"phase shift the",
-		"regenerate the",
-		"traverse the",
-		"observe the",
-		"perceive the",
-		"research modifications to the",
-		"resleeve the",
-		"smoke the",
-		"avoid the",
-		"dechlorinate the",
-		"crowdfund the",
-		"cry into the",
-		"alienate the",
-		"spoon the",
-		"eat the",
-		"go swimming with the",
-		"bake the",
-		"crowdsource the",
-		"move into the",
-		"brainsteal the",
-		"spiderize the",
-		"unicornize the",
-		"sob into the",
-		"google talk to the",
-		"dream of the",
-		"stuff the",
-		"cram the",
-		"scandalize the",
-		"spacewalk the",
-	].map(function(e){ return e +" "+ noun });
-	a.push("recalculate the "+noun+" matrix");
-	a.push("verify the "+noun+" settings");
-	
+		"swizzle",
+		"configure",
+		"reconfigure",
+		"reverse",
+		"invert",
+		"replace",
+		"charge",
+		"reboot",
+		"use",
+		"activate",
+		"re-synergize",
+		"phase shift",
+		"regenerate",
+		"traverse",
+		"observe",
+		"perceive",
+		"resleeve",
+		"smoke",
+		"avoid",
+		"dechlorinate",
+		"crowdfund",
+		"cry into",
+		"alienate",
+		"spoon",
+		"eat",
+		"bake",
+		"crowdsource",
+		"move into",
+		"brainsteal",
+		"spiderize",
+		"unicornize",
+		"sob into",
+		"google talk to",
+		"dream of",
+		"stuff",
+		"cram",
+		"scandalize",
+		"spacewalk",
+		"go swimming with",
+		"research modifications to",
+		"buy", //a fresh
+	]; 
+
+	//.map(function(e){ return e +" "+ noun });
+	//a.push("recalculate the "+noun+" matrix");
+	//a.push("verify the "+noun+" settings");
+
 	return s(a);
 }
 
-var futureadj = function(){
+var article = function(){
+	return s(["the", "some", "a", "your"]);
+}
+
+
+//futureadj
+var adj = function(){
 	return s([
 		"plasma",
 		"warp",
@@ -375,7 +393,7 @@ var futurepeople = function(){
 	]
 }
 
-var futurenouns = function(){
+var noun = function(){
 	var a = [
 		"coil",
 		"reactor",
@@ -397,6 +415,7 @@ var futurenouns = function(){
 		"wizard",
 		"droid",
 		"blaster",
+		"battlesuit",
 		"robot",
 		"stardrive",
 		"warphole",
@@ -421,8 +440,9 @@ var futurenouns = function(){
 		"gurubot",
 		"pointer",
 		"space cat",
-	].map(function(e){ return c(futureadj(), e)}) //combine all nouns here with a randomly selected future adjective
-	return s(a)
+	];
+	//.map(function(e){ return c(futureadj(), e)}) //combine all nouns here with a randomly selected future adjective
+	return s(a);
 }
 
 var future_events = function(){
@@ -439,7 +459,28 @@ var future_events = function(){
 	return s(a);
 }
 
+/*** some simple assembly functions to build larger words*/
+var nounphrase = function(){
+	return s([
+		pronoun(),
+	]);
+};
+
+var adjnoun = function(){
+	return c(adj(), noun());
+}
+var verbtheadjnoun = function(word){
+	if(word){
+		return c(verb(), article(), word);
+	} else {
+		return c(verb(), article(), adj(), noun());
+	}
+}
+
+/** phrase generation */
 var futurephrase = function(){
+	//<phrase> ::= <futureverb> " " <article> " " <futureadj> " " <futurenoun> ;
+
 	var a = [
 		"",
 		"maybe you should",
@@ -456,49 +497,53 @@ var futurephrase = function(){
 		"who doesn't know how to",
 		"are you telling me you can't",
 	].map(function(e){
-		return c(e, futureverbs( futurenouns() ))
+		return c( e, verb(), article(), adj(), noun() );
 	});
-	a.push( "double check the "+ futurenouns() +" for "+ c(futurebadadj(), futurebadnoun()) );
+
+	a.push( "double check " + c(article(), adj(), noun()) +" for "+ c(futurebadadj(), futurebadnoun()) );
 	a.push("sounds like you've got "+ c( futurebadadj(), futurebadnoun()) );
 	a.push( "oh shit! " + c(futurebadadj(), futurebadnoun()) + "!");
-	a.push( "you are your own " + futurenouns() );
-	a.push( "disregard " + c(futurebadadj(), futurebadnoun()) + " acquire " + futurenouns());
-	a.push( "DIY " + s([ c(futurebadadj(), futurebadnoun()),  futurenouns()])  )
-	a.push( "420 " + futureverbs( futurenouns() ) + " every day" );
-	a.push( (Math.round(100 * Math.random()) )+ " reasons why you should " + futureverbs( futurenouns() ));
-	a.push( "monetize " + c(futurebadadj(), futurebadnoun()) );
-	a.push(c(futurebadadj(), futurebadnoun()) + ": ruining " + p( futurenouns() ) + "?")
-	//a.push( "too " + futureadj() + "; didn't " + futureverbs( futurenouns() ))
+	a.push( "you are your own " + adjnoun() );
+	a.push( "disregard " + c(futurebadadj(), futurebadnoun()) + " acquire " + adjnoun());
+	a.push( "DIY " + s([ c(futurebadadj(), futurebadnoun()),  adjnoun()])  )
+	a.push( "420 " + verbtheadjnoun() + " every day" );
 	
-	//products
-	a.push("promoted tweet: buy a new " + futurenouns()); // + " from " + makecompany());
-	a.push("new review - " + futurenouns()); // + " from " + makecompany());
-	a.push(futurenouns() + " unboxing video "); // + makecompany());
-	//a.push("rumor - " + c(futurenouns(), s(["announcement", "IPO"])) + s( ["", " from " + makecompany()] ) );
-	a.push(s(["don't panic", "rumor", "breaking"]) + " - " + c(futurenouns(), future_events()) + s( ["", " from " + makecompany()] ) );
-	a.push(futurenouns() + " will disrupt " + futurenouns() + " market");
-	a.push(p(futurenouns()) + " are mega-trending with " + c( futurebadadj(), futurebadnoun()) );
+	a.push( (Math.round(100 * Math.random()) )+ " reasons why you should " + verbtheadjnoun());
+	a.push( "monetize " + c(futurebadadj(), futurebadnoun()) );
+	a.push(c(futurebadadj(), futurebadnoun()) + ": ruining " + p( adjnoun() ) + "?")
+	//a.push( "too " + futureadj() + "; didn't " + verbtheadjnoun( adjnoun() ))
 
-	var x = futureverbs( futurenouns() );
-	var y_noun = futurenouns();
-	var y = futureverbs( y_noun );
+	//products
+	a.push("promoted tweet: buy a new " + adjnoun()); // + " from " + makecompany());
+	a.push("new review - " + adjnoun()); // + " from " + makecompany());
+	a.push(adjnoun() + " unboxing video "); // + makecompany());
+	//a.push("rumor - " + c(adjnoun(), s(["announcement", "IPO"])) + s( ["", " from " + makecompany()] ) );
+	a.push(s(["don't panic", "rumor", "breaking"]) + " - " + c(adjnoun(), future_events()) + s( ["", " from " + makecompany()] ) );
+	a.push(adjnoun() + " will disrupt " + adjnoun() + " market");
+	a.push(p(adjnoun()) + " are mega-trending with " + c( futurebadadj(), futurebadnoun()) );
+	
+
+	var x = verbtheadjnoun();
+	var y_noun = adjnoun();
+	var y = c( verb(), article(), y_noun );
 	a.push("i have come here to " + y + " and " + x + ", and i'm all outta " + p(y_noun))
 
-	a.push("can you believe these "+ p(futurenouns()) + s(["", " have "+c( futurebadadj(), futurebadnoun())]))
+	a.push("can you believe these "+ p(adjnoun()) + s(["", " have "+c( futurebadadj(), futurebadnoun())]))
 
-	var subreddit = c(futurebadadj(), s([p(futurenouns()), futurebadnoun()]) )
+	var subreddit = c(futurebadadj(), s([p(adjnoun()), futurebadnoun()]) )
 	a.push(s(["into", "got", "like", "problems with"]) + " " + subreddit +"? subscribe to /r/"+ nodash(nospace(subreddit)));
 
 	var bad = c( futurebadadj(), futurebadnoun());
-	var good = futurenouns();
+	var good = adjnoun();
 	var what = s(["harm", "help", "aid", "stop", "block", "support", "correlate with"])
 	a.push("new study finds " + bad + " "+what+" " + p(good));
 
-	a.push("do you really need "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]) + "?");	
-	a.push("sorry to hear about your "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]))
+	a.push("do you really need "+s([p(adjnoun()), c(futurebadadj(), futurebadnoun())]) + "?");
+	a.push("sorry to hear about your "+s([p(adjnoun()), c(futurebadadj(), futurebadnoun())]))
 
-	a.push("some of my best friends are "+s([p(futurenouns()), c(futurebadadj(), futurebadnoun())]))
+	a.push("some of my best friends are "+s([p(adjnoun()), c(futurebadadj(), futurebadnoun())]))
 
+	//cyber food
 	a.push("go to town on your " + cyberfood());
 	a.push("dish up the " + cyberfood())
 	a.push("spend some time with " + cyberfood());
@@ -511,8 +556,6 @@ var futurephrase = function(){
 	a.push("fresh homemade "+cyberfood());
 	a.push("go eat "+cyberfood()+ " on a mountain");
 
-
-
 	return s(a);
 }
 
@@ -521,7 +564,7 @@ var attach = function(){
 		"slap",
 		"attach",
 		"geneweld",
-		"cyber tape",
+		"cybertape",
 	];
 	return s(a);
 }
@@ -543,15 +586,15 @@ var simply = function(){
 
 var futurehelpwith = function(word){
 	var a = [
-		//"quickfix "+word+" with " + futureverbs( futurenouns() ),
-		//word + " seems to be working. just " + futureverbs( futurenouns() ),
-		c(simply(), attach()) + " " + futurenouns()+ " to your " + word,
-		"you don't need " + word +" to "+  futureverbs( futurenouns() ),
-		c(simply(), futureverbs( word )),
-		c(simply(), futureverbs( word )),
-		c(simply(), futureverbs( word )),
-		c(simply(), futureverbs( word )) + " and then " + futureverbs( futurenouns() ),
-		"disregard " + word + " acquire " + futurenouns(),
+		//"quickfix "+word+" with " + verbtheadjnoun( adjnoun() ),
+		//word + " seems to be working. just " + verbtheadjnoun( adjnoun() ),
+		c(simply(), attach()) + " " + adjnoun()+ " to your " + word,
+		//"you don't need " + word +" to "+  verbtheadjnoun( adjnoun() ),
+		c(simply(), verbtheadjnoun(word)),
+		c(simply(), verbtheadjnoun(word)),
+		c(simply(), verbtheadjnoun(word)),
+		c(simply(), verbtheadjnoun( word )) + " and then " + verbtheadjnoun( adjnoun() ),
+		"disregard " + word + " acquire " + adjnoun(),
 	];
 	return s(a)
 }
@@ -560,7 +603,7 @@ var futurequestions = function(term){
 	var a = [
 		"no",
 		"signs point to maybe",
-		"signs point to " + futurenouns(),
+		"signs point to " + adjnoun(),
 		"ask again later",
 		"without a doubt",
 		"dubious",
@@ -573,13 +616,13 @@ var futurequestions = function(term){
 		"you may rely on it, " + symsingle(futurebadnoun()),
 		"as i see it, yes",
 		"most likely",
-		"outlook good if you "+futureverbs( futurenouns() ),
+		"outlook good if you "+verbtheadjnoun( adjnoun() ),
 		"yes",
 		"signs point to yes",
-		"reply hazy try again after you "+futureverbs( futurenouns() ),
-		futureverbs( futurenouns() ) + " and ask again later",
+		"reply hazy try again after you "+verbtheadjnoun( adjnoun() ),
+		verbtheadjnoun( adjnoun() ) + " and ask again later",
 		//"better not tell you now",
-		"better not tell you before you "+futureverbs( futurenouns() ),
+		"better not tell you before you "+verbtheadjnoun( adjnoun() ),
 		"cannot predict now",
 		"concentrate on " + c(futurebadadj(), symplural(futurebadnoun())) + " and ask again",
 		"don't count on it, " + nlp.singularize(futurebadnoun()),
@@ -671,14 +714,14 @@ function make_response(phrase, callback){
 
 	//parse this with the help_with extractor
 	var help_with = extract_help(phrase);
-	
+
 	//try to find entities
 	var sentences = nlp.sentences(phrase);
 
 	//split up sentences even more, because I disagree with the handling of questions by nlp
 	for(var i in sentences){
 		//sentences.splice(i, 1, sentences[i].split("?"));
-		
+
 		//fix up the split to  include the question mark (helps out nlp)
 		var split = sentences[i].split("?");
 		if(split.length > 1){
@@ -749,7 +792,7 @@ function make_response(phrase, callback){
 
 
 	//figure out potential responses
-	var potential = []; 
+	var potential = [];
 
 	//prefer help with over all else:
 	if(help_with){
@@ -771,7 +814,7 @@ function make_response(phrase, callback){
 		//	potential.push( futurequestions(best_term) );
 		//}
 		potential.push( futurephrase() );
-		
+
 	}
 
 	callback(s(potential));
@@ -792,7 +835,8 @@ if(!module.parent){
 
 	//basic phrasing tests
 	//make_response("am i any more intelligent spacehelper?", console.log);
-	if( 0 ){	
+	if( 1 ){
+		console.log("------ response tests ------");
 	make_response("how best to handle an overpopulated airbnb booking for a week?", console.log)
 	make_response("can you really help me with stuff?", console.log)
 	make_response("help me make coffee", console.log)
@@ -817,11 +861,12 @@ if(!module.parent){
 	}
 
 	//basic tests
+	console.log("------ basic tests ------");
 	console.log(futurephrase());
 
 	//another way to test: generate until this word appears
 	//return
-	test_str = "fembots"
+	test_str = "best friends"
 	do {
 		testphrase = futurephrase();
 		//testphrase = futurequestions();
